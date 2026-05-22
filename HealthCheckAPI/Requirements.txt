@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+networkx
+httpx
+pandas
+matplotlib
