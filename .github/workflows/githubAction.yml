@@ -6,6 +6,11 @@ on:
       - DEV
       - UAT
       - main
+  
+  pull_request:
+    branches:
+      - UAT
+      - main
 
 jobs:
 
