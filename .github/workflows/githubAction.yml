@@ -71,7 +71,7 @@ jobs:
   # UAT DEPLOYMENT (SIMULATED)
   # ---------------------------------------------------
   deploy-uat:
-    if: github.ref == 'refs/heads/UAT'
+    if: github.ref == 'refs/heads/UAT' || github.event.pull_request.base.ref == 'UAT'
     needs: docker-build
     runs-on: ubuntu-latest
 
@@ -85,7 +85,7 @@ jobs:
   # PROD DEPLOYMENT (SIMULATED)
   # ---------------------------------------------------
   deploy-prod:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
     needs: docker-build
     runs-on: ubuntu-latest
 
