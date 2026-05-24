@@ -1,0 +1,30 @@
+{
+  "components": [
+    {
+      "name": "PowerBI_Website",
+      "url": "https://app.powerbi.com",
+      "depends_on": [
+                "Azure_Active_Directory"
+      ]
+    },
+    {
+      "name": "Microsoft_Azure",
+      "url": "https://azure.microsoft.com/en-gb",
+      "depends_on": [
+        "Azure_Active_Directory"
+      ]
+    },
+    {
+      "name": "Azure_Active_Directory",
+      "url": "https://entra.microsoft.com",
+      "depends_on": []
+    },
+    {
+      "name": "Office_365",
+      "url": "https://www.office.com",
+      "depends_on": [
+        "Azure_Active_Directory"
+      ]
+    }
+  ]
+}

@@ -1,18 +1,29 @@
 # app/graph.py
 import networkx as nx
 
+
 def build_dag(components):
     """
-    Build a DAG from a list of components.
-    Each component: {"name": str, "depends_on": [str]}
+    Build a DAG from components while preserving metadata.
     """
     G = nx.DiGraph()
+
     for comp in components:
-        G.add_node(comp["name"])
+        name = comp["name"]
+
+        # store full metadata in node
+        G.add_node(
+            name,
+            url=comp.get("url"),
+            depends_on=comp.get("depends_on", [])
+        )
+
         for dep in comp.get("depends_on", []):
-            G.add_edge(dep, comp["name"])
+            G.add_edge(dep, name)
+
     if not nx.is_directed_acyclic_graph(G):
         raise ValueError("The input graph must be a DAG.")
+
     return G
 
 def bfs_traversal(G, start_nodes=None):
