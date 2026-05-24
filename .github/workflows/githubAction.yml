@@ -1,0 +1,91 @@
+name: CI/CD Simulation Pipeline
+
+on:
+  push:
+    branches:
+      - DEV
+      - UAT
+      - main
+
+jobs:
+
+  # ---------------------------------------------------
+  # TEST JOB
+  # ---------------------------------------------------
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r Requirements.txt
+          pip install pytest
+
+      - name: Run Tests
+        run: |
+          pytest
+
+  # ---------------------------------------------------
+  # BUILD DOCKER IMAGE
+  # ---------------------------------------------------
+  docker-build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t healthcheckapi .
+
+  # ---------------------------------------------------
+  # DEV DEPLOYMENT (SIMULATED)
+  # ---------------------------------------------------
+  deploy-dev:
+    if: github.ref == 'refs/heads/DEV'
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate DEV Deployment
+        run: |
+          echo "Deploying application to DEV environment..."
+          echo "DEV deployment successful."
+
+  # ---------------------------------------------------
+  # UAT DEPLOYMENT (SIMULATED)
+  # ---------------------------------------------------
+  deploy-uat:
+    if: github.ref == 'refs/heads/UAT'
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate UAT Deployment
+        run: |
+          echo "Deploying application to UAT environment..."
+          echo "UAT deployment successful."
+
+  # ---------------------------------------------------
+  # PROD DEPLOYMENT (SIMULATED)
+  # ---------------------------------------------------
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate PROD Deployment
+        run: |
+          echo "Deploying application to PROD environment..."
+          echo "PROD deployment successful."
