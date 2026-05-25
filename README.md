@@ -264,7 +264,7 @@ docker run -p 8000:8000 healthcheckapi
 
 # Using Terraform
 
-## Terraform Integration (Infrastructure as Code)
+## Terraform-based Infrastructure-as-Code (IaC) simulation
 
 This project includes a local Terraform deployment using the Docker provider to simulate infrastructure provisioning and automated container deployment.
 
@@ -426,6 +426,13 @@ PowerBI_Website
         ↓
 Microsoft_Fabric
 ```
+
+# Notes
+- This project assumes all component dependencies form a valid Directed Acyclic Graph (DAG) and that each       service exposes a reachable HTTP-based health endpoint.
+- Features such as authentication, persistent databases, real-time alerting, and Kubernetes-native integrations were intentionally excluded to keep the solution lightweight, focused, and easy to demonstrate locally.
+- The system uses asynchronous health checks, dependency-aware failure propagation, and in-memory state management to balance simplicity, performance, and maintainability.
+- Terraform and GitHub Actions integrations are included primarily for simulation and demonstration purposes to showcase Infrastructure-as-Code (IaC) and CI/CD concepts rather than production-grade cloud deployment.
+- AI tools were used during development to assist in implementing the solution according to the designed architecture, including support for code refinement, debugging, documentation, and improving overall project structure.
 
 # Author
 
