@@ -1,11 +1,9 @@
 {
   "components": [
     {
-      "name": "PowerBI_Website",
-      "url": "https://app.powerbi.com",
-      "depends_on": [
-                "Azure_Active_Directory"
-      ]
+      "name": "Azure_Active_Directory",
+      "url": "https://entra.microsoft.com",
+      "depends_on": []
     },
     {
       "name": "Microsoft_Azure",
@@ -15,14 +13,60 @@
       ]
     },
     {
-      "name": "Azure_Active_Directory",
-      "url": "https://entra.microsoft.com",
-      "depends_on": []
+      "name": "PowerBI_Website",
+      "url": "https://app.powerbi.com",
+      "depends_on": [
+        "Azure_Active_Directory",
+        "Microsoft_Azure"
+      ]
     },
     {
       "name": "Office_365",
       "url": "https://www.office.com",
       "depends_on": [
+        "Azure_Active_Directory"
+      ]
+    },
+    {
+      "name": "Microsoft_Intune",
+      "url": "https://intune.microsoft.com",
+      "depends_on": [
+        "Microsoft_Azure",
+        "Azure_Active_Directory"
+      ]
+    },
+    {
+      "name": "GitHub_Enterprise_Cloud",
+      "url": "https://github.com/enterprise",
+      "depends_on": [
+        "Azure_Active_Directory"
+      ]
+    },
+    {
+      "name": "Azure_SQL_Database",
+      "url": "https://azure.microsoft.com/en-us/products/azure-sql/database",
+      "depends_on": [
+        "Microsoft_Azure"
+      ]
+    },
+    {
+      "name": "Azure_Kubernetes_Service",
+      "url": "https://azure.microsoft.com/en-us/products/kubernetes-service",
+      "depends_on": [
+        "Microsoft_Azure"
+      ]
+    },
+    {
+      "name": "Visual_Studio_Code",
+      "url": "https://code.visualstudio.com",
+      "depends_on": []
+    },
+    {
+      "name": "Microsoft_Fabric",
+      "url": "https://app.fabric.microsoft.com",
+      "depends_on": [
+        "PowerBI_Website",
+        "Microsoft_Azure",
         "Azure_Active_Directory"
       ]
     }
