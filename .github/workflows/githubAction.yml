@@ -1,12 +1,14 @@
 name: CI/CD Simulation Pipeline
 
 on:
+  # CI/CD after code is merged/pushed
   push:
     branches:
       - DEV
       - UAT
       - main
-  
+
+  # CI validation for pull requests only
   pull_request:
     branches:
       - UAT
@@ -32,7 +34,6 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r HealthCheckAPI/Requirements.txt
-          
 
       - name: Simulate Tests
         run: |
@@ -54,10 +55,10 @@ jobs:
           docker build -t healthcheckapi ./HealthCheckAPI
 
   # ---------------------------------------------------
-  # DEV DEPLOYMENT (SIMULATED)
+  # DEV DEPLOYMENT (ONLY ON PUSH TO DEV)
   # ---------------------------------------------------
   deploy-dev:
-    if: github.ref == 'refs/heads/DEV'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/DEV'
     needs: docker-build
     runs-on: ubuntu-latest
 
@@ -68,10 +69,10 @@ jobs:
           echo "DEV deployment successful."
 
   # ---------------------------------------------------
-  # UAT DEPLOYMENT (SIMULATED)
+  # UAT DEPLOYMENT (ONLY AFTER MERGE/PUSH TO UAT)
   # ---------------------------------------------------
   deploy-uat:
-    if: github.ref == 'refs/heads/UAT' || github.event.pull_request.base.ref == 'UAT'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/UAT'
     needs: docker-build
     runs-on: ubuntu-latest
 
@@ -82,10 +83,10 @@ jobs:
           echo "UAT deployment successful."
 
   # ---------------------------------------------------
-  # PROD DEPLOYMENT (SIMULATED)
+  # PROD DEPLOYMENT (ONLY AFTER MERGE/PUSH TO MAIN)
   # ---------------------------------------------------
   deploy-prod:
-    if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: docker-build
     runs-on: ubuntu-latest
 
